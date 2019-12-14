@@ -6,7 +6,7 @@ import fetcher from './fetcher';
 /* common */
 
 const __loginAnonymously = (username: string): Promise<User | null> => {
-  const url = `/auth/anonymous/login?user=${encodeURIComponent(username)}&aud=${siteId}?from=${encodeURIComponent(
+  const url = `/auth/anonymous/login?user=${encodeURIComponent(username)}&aud=${siteId}&from=${encodeURIComponent(
     location.origin + location.pathname + '?selfClose'
   )}`;
   return fetcher.get<User>({ url, withCredentials: true, overriddenApiBase: '' });
@@ -207,7 +207,6 @@ export const removeComment = (id: Comment['id']) =>
 export const removeMyComment = (id: Comment['id']): Promise<void> =>
   fetcher.put({
     url: `/comment/${id}?url=${url}`,
-    // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
     body: {
       delete: true,
     } as object,
